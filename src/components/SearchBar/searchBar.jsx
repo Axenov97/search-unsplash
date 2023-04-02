@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setIsFocus, setIsLoading, setInputData, setApiImages} from "../../store/searchSlice";
 import "./search-bar.scss";
@@ -14,7 +14,6 @@ const SearchBar = () => {
         dispatch(setIsLoading(true))
         fetchData(inputData)
             .then(data => dispatch(setApiImages(data)))
-            .finally(()=>dispatch(setIsLoading(false)))
     }
 
     return <div className={apiImages.length > 0 ? 'search-bar' : 'search-bar empty'}>
