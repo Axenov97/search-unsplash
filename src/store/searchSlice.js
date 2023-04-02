@@ -24,10 +24,6 @@ const searchSlice = createSlice({
         setApiImages(state, action) {
             state.apiImages = action.payload
         },
-
-        addNextPageData(state, action) {
-            state.apiImages = [...state.apiImages, ...action.payload]
-        }
     },
 })
 
@@ -36,7 +32,6 @@ export const {
     setIsLoading,
     setInputData,
     setApiImages,
-    addNextPageData,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

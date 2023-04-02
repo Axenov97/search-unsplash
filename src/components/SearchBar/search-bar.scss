@@ -43,20 +43,19 @@
       min-width: 420px;
       position: relative;
       background-color: #EEEEEE;
-      background-image: url("./../../../src/assets/search.svg");
+      background-image: url("./../../assets/search.svg");
       background-repeat: no-repeat;
       background-position: 9px center;
       background-size: 20px 19px;
-      -webkit-appearance: textfield;
-      &::-webkit-search-decoration {
-        -webkit-appearance: none;
-      }
+
       &::-webkit-search-cancel-button {
         transition: all .1s linear;
+        -webkit-appearance: none;
+        appearance: none;
         height: 19px;
         width: 19px;
         margin-right: 9px;
-        background-image: url("./../../../src/assets/input-clear.svg");
+        background-image: url("./../../assets/input-clear.svg");
         background-size: 19px 19px;
         cursor: pointer;
       }
@@ -88,14 +87,6 @@
   .search-bar {
     padding: 16px;
     height: 80px;
-    transition: all .2s linear 0s;
-    &.empty{
-      height: 340px;
-      .flex-container{
-        left: 0;
-        transform: translateX(0);
-      }
-    }
     .flex-container {
       left: 0;
       padding: 0 16px;

@@ -14,6 +14,7 @@ const SearchBar = () => {
         dispatch(setIsLoading(true))
         fetchData(inputData)
             .then(data => dispatch(setApiImages(data)))
+            .finally(()=>dispatch(setIsLoading(false)))
     }
 
     return <div className={apiImages.length > 0 ? 'search-bar' : 'search-bar empty'}>
