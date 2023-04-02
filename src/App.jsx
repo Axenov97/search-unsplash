@@ -3,7 +3,6 @@ import SearchResultList from "./components/SearchResultList/searchResultList";
 import SearchBar from "./components/SearchBar/searchBar";
 
 function App() {
-
     return <>
         <div className="app">
             <SearchBar />
