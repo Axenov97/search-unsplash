@@ -8,6 +8,7 @@ import {fetchNextPage} from "../../http/searchAPI";
 
 const SearchResultList = () => {
     const isFocus = useSelector(state => state.search.isFocus)
+    const isLoading = useSelector(state => state.search.isLoading)
     const apiImages = useSelector(state => state.search.apiImages)
     const dispatch = useDispatch()
     const inputData = useSelector(state => state.search.inputData)
@@ -26,12 +27,19 @@ const SearchResultList = () => {
     useEffect(() => {
         setTimeout(() => {
             dispatch(setIsLoading(false))
-        }, 1000)
+        }, 1500)
     }, [apiImages])
 
     return (
         <div className='result-list'>
-            <InfiniteScroll className='grid-container' next={nextPageHandler} hasMore={true} loader={<h4>LOADING ...</h4>} dataLength={apiImages.length}>
+            <InfiniteScroll
+                className='grid-container'
+                style={apiImages.length > 0 ? {display: 'grid'} : {display: 'none'}}
+                next={nextPageHandler}
+                hasMore={true}
+                loader={<Preloader />}
+                dataLength={apiImages.length}
+            >
                 {
                     apiImages.length > 0 && apiImages.map((img, key) =>
                         <img
@@ -44,7 +52,10 @@ const SearchResultList = () => {
                 }
             </InfiniteScroll>
             <div className={isFocus && apiImages.length > 0 ? 'foreground active' : 'foreground'} />
-            <Preloader />
+            <div className={isLoading ? 'loader-container active' : 'loader-container'}>
+                <Preloader />
+            </div>
+
         </div>
     )
 
