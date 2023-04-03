@@ -1,4 +1,4 @@
-import React, {createRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setIsFocus, setIsLoading, setInputData, setApiImages} from "../../store/searchSlice";
 import "./search-bar.scss";
@@ -7,8 +7,7 @@ import useReactSimpleMatchMedia from 'react-simple-matchmedia'
 
 const SearchBar = () => {
     const phoneScreen = useReactSimpleMatchMedia('(max-width: 768px)');
-    const ref = createRef()
-    const [jContent, setJContent] = useState({justifyContent: 'center'})
+    const [styles, setStyles] = useState({justifyContent: 'center', opacity: '1'})
     const dispatch = useDispatch()
     const inputData = useSelector(state => state.search.inputData)
     const apiImages = useSelector(state => state.search.apiImages)
@@ -20,11 +19,19 @@ const SearchBar = () => {
         fetchData(inputData)
             .then(data => {
                 dispatch(setApiImages(data))
+                if (!phoneScreen) {
+                    if (data.length === 0 || apiImages.length === 0) {
+                        setStyles({...styles, opacity: '0'})
+                    } else {
+                        setStyles({...styles, opacity: '1'})
+                    }
+                }
+
                 setTimeout(() => {
                     if (data.length > 0) {
-                        setJContent({justifyContent: 'flex-start'})
+                        setStyles({...styles, justifyContent: 'flex-start'})
                     } else {
-                        setJContent({justifyContent: 'center'})
+                        setStyles({...styles, justifyContent: 'center'})
                     }
                 }, 1000)
             })
@@ -37,31 +44,28 @@ const SearchBar = () => {
         }
     }
 
-    useEffect(() => {
-        setJContent({justifyContent: 'center'})
-    }, [])
-
-    useEffect(() => {
-        if (isLoading && !phoneScreen) {
-            ref.current.style.opacity = 0
-        } else {
-            ref.current.style.opacity = 1
-        }
-    }, [isLoading])
-
-    function onFocusHandler() {
+    function onFocusHandler(e) {
         dispatch(setIsFocus())
+        e.currentTarget.placeholder = ''
+    }
+    function onBlurHandler(e) {
+        dispatch(setIsFocus())
+        e.currentTarget.placeholder = 'Телефоны, яблоки, груши...'
     }
 
+    useEffect(() => {
+        setStyles({justifyContent: 'center', opacity: '1'})
+    }, [])
+
     return (
-        <div ref={ref} className={apiImages.length === 0 && !isLoading ? 'search-bar empty' : 'search-bar'} style={jContent}>
+        <div className={apiImages.length === 0 && !isLoading ? 'search-bar empty' : 'search-bar'} style={styles}>
             <input
                 className='search-bar__input'
                 type="search"
                 placeholder='Телефоны, яблоки, груши...'
                 value={inputData}
-                onFocus={() => onFocusHandler()}
-                onBlur={() => dispatch(setIsFocus())}
+                onFocus={(e) => onFocusHandler(e)}
+                onBlur={(e) => onBlurHandler(e)}
                 onKeyUp={(e) => enterKeyHandler(e)}
                 onChange={(e) => dispatch(setInputData(e.target.value))}
             />

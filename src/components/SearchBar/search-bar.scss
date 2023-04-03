@@ -4,20 +4,17 @@
   top: 0;
   left: 0;
   right: 0;
-
-  transform: translateY(0);
   opacity: 1;
   width: 100%;
-  height: auto;
+  height: 104px;
   background-color: #ffffff;
   padding: 40px 80px 16px;
   display: flex;
   align-items: flex-end;
-  transition: transform 1s ease-in-out .3s, opacity .2s ease-in-out 0s;
+  transition: height 1s ease-in-out 0s, opacity .2s ease-in-out 0s;
 
   &.empty{
-    height: fit-content;
-    transform: translateY(232px);
+    height: 340px;
   }
   &.loading{
     opacity: 0;
@@ -82,12 +79,8 @@
 @media (max-width: 768px) {
   .search-bar {
     padding: 16px;
-    height: fit-content;
-    transition: transform .4s ease-in-out 0s;
-
-    &.empty{
-      height: auto;
-    }
+    height: 80px;
+    transition: height .4s ease-in-out 0s;
 
     input {
       flex: 1 1 0;

@@ -37,7 +37,7 @@ const SearchResultList = () => {
                 style={apiImages.length > 0 ? {display: 'grid'} : {display: 'none'}}
                 next={nextPageHandler}
                 hasMore={true}
-                loader={<Preloader />}
+                loader={null}
                 dataLength={apiImages.length}
             >
                 {
