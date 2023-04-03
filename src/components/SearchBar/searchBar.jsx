@@ -35,6 +35,17 @@ const SearchBar = () => {
                     }
                 }, 1000)
             })
+            .catch((err) => {
+                dispatch(setApiImages([]))
+                alert(err.response.data)
+            })
+            .finally((data) => {
+                if (!data) {
+                    setTimeout(() => {
+                        alert('Изображения по данному запросу не найдены')
+                    }, 1000)
+                }
+            })
     }
 
     function enterKeyHandler(e) {
