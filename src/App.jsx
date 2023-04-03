@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 
 function App() {
     const isLoading = useSelector(state => state.search.isLoading)
+    const isFocus = useSelector(state => state.search.isFocus)
 
     useEffect(() => {
         if (isLoading) {
@@ -14,6 +15,10 @@ function App() {
             document.body.style.overflow = 'auto'
         }
     }, [isLoading])
+
+    useEffect(() => {
+        isFocus ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
+    }, [isFocus])
 
     return <>
         <SearchBar />
